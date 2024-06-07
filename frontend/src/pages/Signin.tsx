@@ -1,19 +1,16 @@
-import Auth from "../components/Auth"
-import { Quote } from "../components/Quote"
+import { Quote } from "../components/Quote";
+import SigninComponent from "../components/SigninComponent";
 
-function Signup(){
+function Signin(){
     return (
-        <div>
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-                <div>
-                    <Auth type="signin"/>
-                </div>
-                <div className="hidden lg:block">
-                    <Quote/>
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2">
+            <SigninComponent/>
+            <div className="hidden lg:block">
+                <Quote/>
             </div>
         </div>
     )
 }
 
-export default Signup
+
+export default Signin;

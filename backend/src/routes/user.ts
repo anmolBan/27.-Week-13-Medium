@@ -71,7 +71,7 @@ userRouter.post('/signin', async (c) => {
         });
         if(!user){
             c.status(403);
-            return c.text("No user found with the given email")
+            return c.text("Invalid credentials");
         }
         const jwt = await sign({id: user.id}, c.env.JWT_SECRET);
   

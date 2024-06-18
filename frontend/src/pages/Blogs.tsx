@@ -4,6 +4,7 @@ import BlogCard from "../components/BlogCard";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
+import Skeletons from "../skeletons/SkeletonsCompo";
 
 let count = 1;
 
@@ -92,12 +93,28 @@ function Blogs(){
 
     }
 
+    function getSkeletons(){
+        return <div className="flex flex-col gap-10">
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+            <Skeletons/>
+        </div>
+    }
+
     return (
         <div>
             <AppBar/>
             <div className="flex justify-center">
                 <div className="flex flex-col items-center w-full">
-                    {loading ? "Loading..." : allBlogs.map((blog: {id: string; title: string; content: string, topic: string, date: string, author: {name: string}
+                    {/* <Skeletons/> */}
+                    {loading ? getSkeletons() : allBlogs.map((blog: {id: string; title: string; content: string, topic: string, date: string, author: {name: string}
                     }) => (<div key={count++}><BlogCard id={blog.id} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={blog.date === "" ? "N/A" : getDate(blog.date)} topic={blog.topic === "" ? "Random" : blog.topic}/>
                     <div className="border-b my-10"></div></div>))}
                 </div>

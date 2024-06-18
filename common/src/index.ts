@@ -16,8 +16,7 @@ export const signinInput = z.object({
 
 export const createPostInput = z.object({
     title: z.string(),
-    content: z.string(),
-    authorId: z.string()
+    content: z.string()
 });
 
 

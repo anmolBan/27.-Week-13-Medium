@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from 'hono/jwt'
 import { createPostInput, updatePostInput } from "@anmolban/medium-common";
+const date = new Date();
 
 export const blogRouter = new Hono<{
     Bindings: {
@@ -15,7 +16,6 @@ export const blogRouter = new Hono<{
 }>();
 
 blogRouter.use("/*", async (c, next) => {
-
 
     try{
         if(c.req.path.includes("/bulk")){
@@ -37,8 +37,10 @@ blogRouter.use("/*", async (c, next) => {
         c.set("userId", userId);
         await next();
         return;
+
     } catch(error){
         console.log(error);
+        c.status(403);
         return c.json({error});
     }
 
@@ -65,7 +67,9 @@ blogRouter.post('/', async (c) => {
             data: {
                 title: body.title,
                 content: body.content,
-                authorId: authorId
+                authorId: authorId,
+                date: date.toLocaleDateString(),
+                topic: body.topic
             }
         });
 
@@ -131,7 +135,20 @@ blogRouter.get('/bulk', async (c) => {
     }).$extends(withAccelerate());
 
     try{
-        const posts = await prisma.post.findMany();
+        const posts = await prisma.post.findMany({
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                date: true,
+                topic: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
         c.status(200);
         return c.json({posts});
     } catch(error){
@@ -163,6 +180,18 @@ blogRouter.get('/:id', async (c) => {
         const post = await prisma.post.findUnique({
             where: {
                 id: id
+            },
+            select: {
+                id: true,
+                title: true,
+                content: true,
+                date: true,
+                topic: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         });
         c.status(200);

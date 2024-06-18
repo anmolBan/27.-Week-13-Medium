@@ -3,6 +3,7 @@ import AppBar from "../components/AppBar";
 import BlogCard from "../components/BlogCard";
 import axios from 'Axios';
 import { useNavigate } from "react-router-dom";
+import { BACKEND_URL } from "../config";
 
 let count = 1;
 
@@ -22,7 +23,7 @@ function Blogs(){
 
         async function useEffectFunction(){
             try{
-                const response = await axios.get("http://127.0.0.1:8787/api/v1/blog/bulk");
+                const response = await axios.get(`${BACKEND_URL}/api/v1/blog/bulk`);
     
                 setAllBlogs(response.data.posts);
                 setLoading(false);
@@ -33,13 +34,71 @@ function Blogs(){
         useEffectFunction();
     }, []);
 
+    function getDate(date: string){
+        const splitDate = date.split("/");
+        let month = splitDate[0];
+        const day = splitDate[1];
+        const year = splitDate[2];
+
+        if(month === "1"){
+            month = "JAN"
+        }
+
+        else if(month === "2"){
+            month = "FEB"
+        }
+
+        else if(month === "3"){
+            month = "MAR"
+        }
+
+        else if(month === "4"){
+            month = "APR"
+        }
+
+        else if(month === "5"){
+            month = "MAY"
+        }
+
+        else if(month === "6"){
+            month = "JUN"
+        }
+
+        else if(month === "7"){
+            month = "JUL"
+        }
+
+        else if(month === "8"){
+            month = "AUG"
+        }
+
+        else if(month === "9"){
+            month = "SEP"
+        }
+
+        else if(month === "10"){
+            month = "OCT"
+        }
+
+        else if(month === "11"){
+            month = "NOV"
+        }
+
+        else if(month === "12"){
+            month = "DEC"
+        }
+
+        return month + day + ", " + year;
+
+    }
+
     return (
         <div>
             <AppBar/>
             <div className="flex justify-center">
                 <div className="flex flex-col items-center w-full">
-                    {loading ? "Loading..." : allBlogs.map((blog: {authorId: string; title: string; content: string
-                    }) => (<div><BlogCard id="1" key={count++} authorName="Anmol Bansal" title={blog.title} content={blog.content} publishedDate="Jun 11, 1998" topic="programming"/>
+                    {loading ? "Loading..." : allBlogs.map((blog: {id: string; title: string; content: string, topic: string, date: string, author: {name: string}
+                    }) => (<div key={count++}><BlogCard id={blog.id} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={blog.date === "" ? "N/A" : getDate(blog.date)} topic={blog.topic === "" ? "Random" : blog.topic}/>
                     <div className="border-b my-10"></div></div>))}
                 </div>
             </div>

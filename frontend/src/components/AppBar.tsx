@@ -10,9 +10,11 @@ function AppBar(){
         <div className="flex justify-between border-b w-screen h-14 mb-10">
             <div className="flex flex-col justify-center">
                 <div className="flex w-80 mx-6">
-                    <div className="">
+                    <button onClick={() => {
+                        navigate("/blogs")
+                    }} className="">
                         <img className="object-contain h-11" src="/medium-logo.svg"></img>
-                    </div>
+                    </button>
                     <div className="flex flex-col justify-center ml-5">
                         <SearchBar/>
                     </div>

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState} from "react";
+import { ChangeEvent, useEffect, useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { SignupInput } from "@anmolban/medium-common";
 import axios from "Axios";
@@ -6,19 +6,25 @@ import { BACKEND_URL } from "../config";
 
 function SignupComponent(){
 
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if(token){
+            navigate("/blogs")
+        }
+    }, []);
+
     const [postInputs, setPostInputs] = useState<SignupInput>({
         name: "",
         email: "",
         password: ""
     });
 
-    const navigate = useNavigate();
-
     async function sendRequest(){
         try{
             const response  = await axios .post(`${BACKEND_URL}/api/v1/user/signup`, postInputs);
             const jwt = response.data;
-            console.log(jwt);
             localStorage.setItem("token", jwt);
             navigate("/blogs");
         } catch(error){

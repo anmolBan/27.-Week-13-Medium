@@ -23,7 +23,7 @@ function Blog(){
             <AppBar></AppBar>
             <div className="flex justify-center">
                 <div className=" md:w-[680px] w-screen flex flex-col justify-center px-6">
-                    <div className="font-bold text-5xl">
+                    <div className="font-bold text-5xl break-words">
                         {blog?.title}
                     </div>
                     <div className="flex gap-2 my-10 h-[36px] w-[680px] border-b">

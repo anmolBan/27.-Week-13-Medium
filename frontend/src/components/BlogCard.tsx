@@ -28,7 +28,7 @@ function BlogCard({authorName, title, content, publishedDate, topic, id}: BlogCa
                     </div>
                     <div className="h-[166px]">
                         <div className="h-[108px]">
-                            <div className="font-bold text-xl">
+                            <div className="font-bold text-xl break-words">
                                 {title}
                             </div>
                             <div className="mt-2 break-words">

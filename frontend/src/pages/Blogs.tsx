@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import AppBar from "../components/AppBar";
 import BlogCard from "../components/BlogCard";
-import axios from 'Axios';
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 

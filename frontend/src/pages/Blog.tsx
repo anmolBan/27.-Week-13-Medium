@@ -18,6 +18,8 @@ function Blog(){
     const authorName = blog?.author.name || "";
     const publishedDate = blog?.date || "";
 
+    const paragraphs = blog?.content.split('\n').filter(paragraph => paragraph.trim() !== "");
+
     return (
         <div className="w-full">
             <AppBar></AppBar>
@@ -36,7 +38,12 @@ function Blog(){
                         </div>
                     </div>
                     <div className="leading-[32px] text-[18px] font-medium font-blog text-gray-600 break-words">
-                        {blog?.content}
+                        {(paragraphs || []).map((paragraph, index) => (
+                            <div key={index}>
+                                <p>{paragraph}</p>
+                                <br></br>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>

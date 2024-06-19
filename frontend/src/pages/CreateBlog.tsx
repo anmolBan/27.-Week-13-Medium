@@ -12,6 +12,7 @@ function CreateBlog(){
     const [content, setContent] = useState(localStorage.getItem("content") || "");
 
     async function onPublishButtonClickHandler(){
+        console.log(content);
         try{
             const response = await axios.post(`${BACKEND_URL}/api/v1/blog`, {
                 title,
@@ -76,6 +77,7 @@ function CreateBlog(){
 
                     <textarea id="auto-resize-content-area" className=" outline-none p-4 font-blog  leading-[32px] text-[21px] overflow-hidden resize-none text-gray-500" placeholder="Tell your story..." onChange={(e) => {
                         setContent(e.target.value);
+                        console.log(e.target.value);
                         localStorage.setItem("content", e.target.value);
                     }} value={content}></textarea>
                 </div>

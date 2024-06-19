@@ -116,7 +116,7 @@ function Blogs(){
                     {/* <Skeletons/> */}
                     {loading ? getSkeletons() : allBlogs.map((blog: {id: string; title: string; content: string, topic: string, date: string, author: {name: string}
                     }) => (<div key={count++}><BlogCard id={blog.id} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={blog.date === "" ? "N/A" : getDate(blog.date)} topic={blog.topic === "" ? "Random" : blog.topic}/>
-                    <div className="border-b my-10"></div></div>))}
+                    <div className="border-b mb-10"></div></div>))}
                 </div>
             </div>
         </div>

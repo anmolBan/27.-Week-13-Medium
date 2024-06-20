@@ -1,6 +1,6 @@
 function SearchBar(){
     return (
-        <div className="bg-gray-50 w-60 h-10 rounded-full flex flex-col justify-center">
+        <div className="bg-gray-50 min-w-10 max-w-60 h-10 rounded-full flex flex-col justify-center">
             <div className="flex">
                 <div className="mx-2">
                     <img className=" rounded-full object-contain h-7" src="/search-icon.svg"></img>

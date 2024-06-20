@@ -32,7 +32,7 @@ export function BlogsSkeletons(){
 
 export function BlogSkeleton(){
     return(
-        <div role="status" className="max-w-sm animate-pulse">
+        <div role="status" className="animate-pulse">
 
             <div className="flex justify-center">
                     <div className=" min-w-[400px] md:w-[680px] w-screen flex flex-col justify-center px-6">

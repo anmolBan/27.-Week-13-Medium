@@ -9,7 +9,7 @@ function AppBar(){
     return(
         <div className="flex justify-between border-b w-screen h-14 mb-10">
             <div className="flex flex-col justify-center">
-                <div className="flex w-80 mx-6">
+                <div className="flex w-40 sm:w-80 mx-6">
                     <button onClick={() => {
                         navigate("/blogs")
                     }} className="">

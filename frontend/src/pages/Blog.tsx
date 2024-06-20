@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useBlog } from "../hooks";
 import AppBar from "../components/AppBar";
 import SmallAvatar from "../components/SmallAvatar";
+import { BlogSkeleton } from "../skeletons/SkeletonsCompo";
 
 function Blog(){
 
@@ -11,9 +12,14 @@ function Blog(){
         id: id || ""
     });
 
-    if(loading){
-        return <div>Loading...</div>
-    }
+    // if(loading){
+    //     return (
+    //         <div>
+    //             <AppBar/>
+    //             <BlogSkeleton/>
+    //         </div>
+    //     )
+    // }
 
     const authorName = blog?.author.name || "";
     const publishedDate = blog?.date || "";
@@ -24,7 +30,8 @@ function Blog(){
         <div className="w-full">
             <AppBar></AppBar>
             <div className="flex justify-center">
-                <div className=" md:w-[680px] w-screen flex flex-col justify-center px-6">
+                {loading ? <BlogSkeleton/> : 
+                <div className=" min-w-[400px] md:w-[680px] w-screen flex flex-col justify-center px-6">
                     <div className="font-bold text-5xl break-words">
                         {blog?.title}
                     </div>
@@ -46,6 +53,7 @@ function Blog(){
                         ))}
                     </div>
                 </div>
+                }
             </div>
         </div>
     )

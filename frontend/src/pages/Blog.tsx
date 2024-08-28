@@ -12,17 +12,8 @@ function Blog(){
         id: id || ""
     });
 
-    // if(loading){
-    //     return (
-    //         <div>
-    //             <AppBar/>
-    //             <BlogSkeleton/>
-    //         </div>
-    //     )
-    // }
-
     const authorName = blog?.author.name || "";
-    const publishedDate = blog?.date || "";
+    const publishedDate = blog?.createdAt.split("T")[0] || "";
 
     const paragraphs = blog?.content.split('\n').filter(paragraph => paragraph.trim() !== "");
 

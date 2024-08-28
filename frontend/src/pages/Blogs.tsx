@@ -36,60 +36,8 @@ function Blogs(){
     }, []);
 
     function getDate(date: string){
-        const splitDate = date.split("/");
-        let month = splitDate[0];
-        const day = splitDate[1];
-        const year = splitDate[2];
-
-        if(month === "1"){
-            month = "JAN"
-        }
-
-        else if(month === "2"){
-            month = "FEB"
-        }
-
-        else if(month === "3"){
-            month = "MAR"
-        }
-
-        else if(month === "4"){
-            month = "APR"
-        }
-
-        else if(month === "5"){
-            month = "MAY"
-        }
-
-        else if(month === "6"){
-            month = "JUN"
-        }
-
-        else if(month === "7"){
-            month = "JUL"
-        }
-
-        else if(month === "8"){
-            month = "AUG"
-        }
-
-        else if(month === "9"){
-            month = "SEP"
-        }
-
-        else if(month === "10"){
-            month = "OCT"
-        }
-
-        else if(month === "11"){
-            month = "NOV"
-        }
-
-        else if(month === "12"){
-            month = "DEC"
-        }
-
-        return month + day + ", " + year;
+        const splitDate = date.split("T");
+        return splitDate[0];
 
     }
 
@@ -112,8 +60,9 @@ function Blogs(){
             <AppBar/>
             <div className="flex justify-center">
                 <div className="flex flex-col items-center w-full">
-                    {loading ? getSkeletons() : allBlogs.map((blog: {id: string; title: string; content: string, topic: string, date: string, author: {name: string}
-                    }) => (<div key={count++}><BlogCard id={blog.id} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={blog.date === "" ? "N/A" : getDate(blog.date)} topic={blog.topic === "" ? "Random" : blog.topic}/>
+                    {loading ? getSkeletons() : allBlogs.map((blog: {id: string; title: string; content: string, topic: string, createdAt: string, author: {name: string}
+                    }) => (
+                    <div key={count++}><BlogCard id={blog.id} authorName={blog.author.name} title={blog.title} content={blog.content} publishedDate={getDate(blog.createdAt)} topic={blog.topic === "" ? "Random" : blog.topic}/>
                     <div className="border-b my-5 sm:my-8"></div></div>))}
                 </div>
             </div>

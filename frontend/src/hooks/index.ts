@@ -5,7 +5,7 @@ import { BACKEND_URL } from "../config";
 interface Blog{
     title: string;
     content: string;
-    date: string;
+    createdAt: string;
     topic: string;
     id: string;
     author: {
@@ -32,3 +32,6 @@ export function useBlog({id} : {id: string}){
 
     return {blog, loading};
 }
+
+
+export default Blog;

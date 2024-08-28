@@ -3,6 +3,7 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { verify } from 'hono/jwt'
 import { createPostInput, updatePostInput } from "@anmolban/medium-common";
+import zod from "zod";
 const date = new Date();
 
 export const blogRouter = new Hono<{
@@ -68,7 +69,6 @@ blogRouter.post('/', async (c) => {
                 title: body.title,
                 content: body.content,
                 authorId: authorId,
-                date: date.toLocaleDateString(),
                 topic: body.topic
             }
         });
@@ -140,7 +140,7 @@ blogRouter.get('/bulk', async (c) => {
                 id: true,
                 title: true,
                 content: true,
-                date: true,
+                createdAt: true,
                 topic: true,
                 author: {
                     select: {
@@ -185,7 +185,7 @@ blogRouter.get('/:id', async (c) => {
                 id: true,
                 title: true,
                 content: true,
-                date: true,
+                createdAt: true,
                 topic: true,
                 author: {
                     select: {
@@ -202,6 +202,62 @@ blogRouter.get('/:id', async (c) => {
         return c.json({
             message: "Error fetching blog"
         });
+    } finally{
+        await prisma.$disconnect();
+    }
+});
+
+const searchSchema = zod.object({
+    title: zod.string()
+});
+
+blogRouter.post("/search", async (c) => {
+    
+    const body = await c.req.json();
+    
+    const parsedPayload = searchSchema.safeParse(body);
+    
+    if(!parsedPayload.success){
+        c.status(403);
+        return c.json({
+            message: "Invalid Inputs"
+        });
+    }
+    
+    const prisma = new PrismaClient({
+        datasourceUrl: c.env.DATABASE_URL
+    }).$extends(withAccelerate());
+
+    try{
+
+        const posts = await prisma.post.findMany({
+            where: {
+                title: {
+                    contains: body.title,
+                    mode: "insensitive"
+                }
+            },
+            select: {
+                id: true,
+                title: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
+        c.status(200);
+        return c.json({posts});
+
+    } catch(error){
+
+        console.log(error);
+        c.status(411);
+        return c.json({
+            message: "Error fetching posts"
+        });
+
     } finally{
         await prisma.$disconnect();
     }

@@ -40,7 +40,7 @@ function BlogCard({authorName, title, content, publishedDate, topic, id}: BlogCa
                                 {topic}
                             </div>
                             <div className="text-slate-700 text-sm leading-9 hidden sm:block">
-                                {Math.ceil(content.length / 200) + " min read"}
+                                {Math.ceil(content.length / 1400) + " min read"}
                             </div>
                         </div>
                     </div>
